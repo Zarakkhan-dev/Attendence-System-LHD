@@ -5,6 +5,7 @@ import {
     getUserById,
     updateUser,
     deleteUser,
+    loginUser
 } from '../Controller/userController.js';
 
 import userSchema from '../validation/userValidation.js';
@@ -16,7 +17,9 @@ router
     .post(validateRequest(userSchema), createUser)  // Create with validation
     .get(getUsers); // Get all users
 
-router
+router.route('/login').post(loginUser)
+
+    router
     .route('/:id')
     .get(getUserById)  // Get user by ID
     .put(updateUser)  // Update with validation

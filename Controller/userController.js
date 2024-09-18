@@ -1,22 +1,26 @@
 import User from '../models/userModel.js';
 import appAsync from "../utils/catchAsync.js"
 import appError from '../utils/appError.js';
-
+import { generateAccessToken, generateRefreshToken, handleTokenGeneration } from '../middleware/tokenMiddleware.js';
+import bcrypt from "bcryptjs"
 // Create a new user
 export const createUser = appAsync(async (req, res, next) => {
-    console.log(req.body);
+    const { password, employeeID } = req.body;
+
     // Check if the employeeID or email already exists
-    // const existingUser = await User.findOne({ employeeID });
-    // if (existingUser) {
-    //     return next(new appError('Employee with this ID already exists', 400));
-    // }
+    const existingUser = await User.findOne({ employeeID });
+    if (existingUser) {
+        return next(new appError('Employee with this ID already exists', 400));
+    }
 
-    const newUser = await User.create(req.body);
+    // Hash the password before saving the user
+    const hashedPassword = await bcrypt.hash(password, 12); // 12 is the salt rounds
 
-    res.status(201).json({
-        success: true,
-        data: newUser,
-    });
+    // Create the new user with the hashed password
+    let newUser = await User.create({ ...req.body, password: hashedPassword });
+
+    // Generate tokens and save them to the new user
+    await handleTokenGeneration(newUser, res);
 });
 
 // Get all users
@@ -70,5 +74,41 @@ export const deleteUser = appAsync(async (req, res, next) => {
     res.status(204).json({
         success: true,
         data: null,
+    });
+});
+
+
+export const loginUser = appAsync(async (req, res, next) => {
+    const { email, password } = req.body;
+
+    // Check if the user exists and password is correct
+    const user = await User.findOne({ email }).select('+password'); // Select password as it's hidden by default
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+        return next(new appError('Invalid email or password', 401));
+    }
+
+    // Generate new tokens
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    // Update tokens in the database
+    const updatedUser = await User.findByIdAndUpdate(user._id, {
+        accessToken,
+        refreshToken,
+    }, {
+        new: true, // Return the updated document
+        runValidators: true,
+    });
+
+    res.status(200).json({
+        success: true,
+        accessToken,
+        refreshToken,
+        user: {
+            id: updatedUser._id,
+            username: updatedUser.username,
+            email: updatedUser.email,
+        }
     });
 });
