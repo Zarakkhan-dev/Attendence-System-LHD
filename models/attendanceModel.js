@@ -26,10 +26,7 @@ const attendanceSchema = new mongoose.Schema(
       type: String,
       enum: ["accept", "reject"],
     
-    },
- 
-
-    
+    },   
    
   },
   { timestamps: true }

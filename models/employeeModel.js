@@ -2,10 +2,15 @@ const mongoose = require("mongoose");
 
 const employeeSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     salaryPerDay: {
       type: Number,
       required: true,
-      
     },
 
     totalWorkingDays: {
@@ -15,7 +20,6 @@ const employeeSchema = new mongoose.Schema(
 
     totalAbsentDays: {
       type: Number,
-     
     },
 
     totalLeaveDays: {
@@ -41,18 +45,19 @@ const employeeSchema = new mongoose.Schema(
     deductedSalary: {
       type: Number,
     },
-    month:{
-      type:String,
-      required:true
-    },
-    year:{
-      type:String,
-      required:true
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    month: {
+      type: String,
       required: true,
+    },
+    year: {
+      type: String,
+      required: true,
+    },
+    officeInTime: {
+      type: Date,
+    },
+    officeOutTime: {
+      type: Date,
     },
   },
   { timestamps: true }
