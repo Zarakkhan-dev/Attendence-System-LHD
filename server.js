@@ -1,24 +1,32 @@
-const express = require("express");
-const dotenv = require("dotenv");
+import express from "express"
+import { configDotenv } from "dotenv";
+import db from "./Config/db.js";
+import cors from "cors";
+
+//Routes
+import userRoutes from "./routes/userRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js"
+
+configDotenv();
 const app = express();
-const Router = require("./routes/indexRoute");
-dotenv.config();
 
-const { connectDB } = require("./config/dbConnection");
-
-//Middleware to prase JSON bodies
+//middlewares
 app.use(express.json());
+app.use(cors());
 
-app.use(express.urlencoded({ extended: true }));
 
-//Server Connection
-connectDB();
+//Define routes
 
-// //Router Connection
-app.use("/api", Router);
+app.use("/api/user",userRoutes);
+app.use("/api/employee-detail" ,employeeRoutes);
 
-//Server Start
-const PORT = process.env.PORT || 2000;
-app.listen(PORT, () => {
-  console.log(`Server is running at port ${PORT}`);
-});
+
+db();
+
+
+
+
+const PORT = process.env.PORT || 4001;
+app.listen(PORT , ()=>{
+    console.log(`Servrer is running at port Number ${PORT}`)
+})

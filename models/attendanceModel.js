@@ -1,35 +1,32 @@
-const { string } = require("joi");
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
-const attendanceSchema = new mongoose.Schema(
-  {
-    employeeId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee",
-      required: true,
+const attendanceSchema = new mongoose.Schema({
+    employeeID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Employee', // Reference to the Employee model
+        required: true,
     },
-   
     checkInTime: {
-      type: String,
+        type: Date,
+        required: true,
     },
-   
     checkOutTime: {
-      type: String,
+        type: Date,
     },
-   
     lateReason: {
-      type: string,
-      default: false,
+        type: String,
+        trim: true,
     },
-    
     status: {
-      type: String,
-      enum: ["accept", "reject"],
-    
-    },   
-   
-  },
-  { timestamps: true }
-);
+        type: String,
+        enum: ['Accepted', 'Rejected'],
+        default: 'Accepted',
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now,
+    }
+}, { timestamps: true });
 
-module.exports = mongoose.model("Attendance", attendanceSchema);
+const Attendance = mongoose.model('Attendance', attendanceSchema);
+export default Attendance;
