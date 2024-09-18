@@ -49,7 +49,17 @@ const employeeSchema = new mongoose.Schema({
     year: {
         type: Number,
         required: true,
+    },
+    officeInTime: {
+        type: Date,
+        required: true,
+    },
+    officeOutTime: {
+        type: Date,
+        required: false,
     }
 }, { timestamps: true });
 
-export default mongoose.model('Employee', employeeSchema);
+
+const Employee = mongoose.models.Employee  ||  mongoose.model('Employee', employeeSchema);
+export default Employee

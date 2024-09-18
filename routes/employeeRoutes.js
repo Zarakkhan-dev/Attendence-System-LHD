@@ -12,13 +12,13 @@ const router = express.Router();
 
 router
     .route('/')
-    .post(validateRequest(employeeSchema), createEmployee)  // Create with validation
-    .get(getEmployees);  // Get all employees
+    .post(validateRequest(employeeSchema), createEmployee)  
+    .get(getEmployees);  
 
 router
     .route('/:id')
-    .get(getEmployeeById)  // Get employee by ID
-    .put(updateEmployee)  // Update with validation
-    .delete(deleteEmployee);  // Delete employee by ID
+    .get(getEmployeeById)  
+    .put(updateEmployee)  
+    .delete(deleteEmployee);  
 
 export default router;

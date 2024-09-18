@@ -14,15 +14,15 @@ const router = express.Router();
 
 router
     .route('/')
-    .post(validateRequest(userSchema), createUser)  // Create with validation
-    .get(getUsers); // Get all users
+    .post(validateRequest(userSchema), createUser)  
+    .get(getUsers); 
 
 router.route('/login').post(loginUser)
 
     router
     .route('/:id')
-    .get(getUserById)  // Get user by ID
-    .put(updateUser)  // Update with validation
-    .delete(deleteUser);  // Delete user by ID
+    .get(getUserById) 
+    .put(updateUser)  
+    .delete(deleteUser);  
 
 export default router;

@@ -34,8 +34,8 @@ export const handleTokenGeneration = async (user, res) => {
     return res.status(200).json({
         success: true,
         doc: [
-        accessToken,
-        refreshToken,
+     {accessToken},
+        {refreshToken},
         {user: {
             id: user._id,
             username: user.username,
