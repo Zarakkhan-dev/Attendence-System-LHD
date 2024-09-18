@@ -3,6 +3,7 @@ import appAsync from "../utils/catchAsync.js"
 import appError from '../utils/appError.js';
 import { generateAccessToken, generateRefreshToken, handleTokenGeneration } from '../middleware/tokenMiddleware.js';
 import bcrypt from "bcryptjs"
+
 // Create a new user
 export const createUser = appAsync(async (req, res, next) => {
     const { password, employeeID } = req.body;
@@ -80,9 +81,8 @@ export const deleteUser = appAsync(async (req, res, next) => {
 
 export const loginUser = appAsync(async (req, res, next) => {
     const { email, password } = req.body;
-
-    // Check if the user exists and password is correct
-    const user = await User.findOne({ email }).select('+password'); // Select password as it's hidden by default
+w
+    const user = await User.findOne({ email }).select('+password'); 
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
         return next(new appError('Invalid email or password', 401));
@@ -97,7 +97,7 @@ export const loginUser = appAsync(async (req, res, next) => {
         accessToken,
         refreshToken,
     }, {
-        new: true, // Return the updated document
+        new: true, 
         runValidators: true,
     });
 

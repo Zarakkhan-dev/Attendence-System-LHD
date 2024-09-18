@@ -6,6 +6,7 @@ import cors from "cors";
 //Routes
 import userRoutes from "./routes/userRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js"
+import attendenceRoutes from "./routes/attendenceRoutes.js"
 
 configDotenv();
 const app = express();
@@ -14,14 +15,14 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+db();
 
 //Define routes
 
 app.use("/api/user",userRoutes);
 app.use("/api/employee-detail" ,employeeRoutes);
+app.use("/api/atendence" ,attendenceRoutes)
 
-
-db();
 
 
 

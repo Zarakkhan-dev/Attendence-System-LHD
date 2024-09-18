@@ -13,6 +13,10 @@ const attendanceSchema = new mongoose.Schema({
     checkOutTime: {
         type: Date,
     },
+    data : {
+        type : Date ,
+
+    },
     lateReason: {
         type: String,
         trim: true,
@@ -28,5 +32,6 @@ const attendanceSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Attendance = mongoose.model('Attendance', attendanceSchema);
-export default Attendance;
+
+const Attendence =mongoose.models.Attendance  || mongoose.model('Attendance', attendanceSchema);
+export default Attendence
