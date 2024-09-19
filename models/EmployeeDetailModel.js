@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
-const employeeSchema = new mongoose.Schema({
+const employeeDetailSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
+        unique :true ,
     },
     salaryPerDay: {
         type: Number,
@@ -61,5 +62,5 @@ const employeeSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-const Employee = mongoose.models.Employee  ||  mongoose.model('Employee', employeeSchema);
-export default Employee
+const Employee_details = mongoose.models.Employee  ||  mongoose.model('Employee_details', employeeDetailSchema);
+export default Employee_details
