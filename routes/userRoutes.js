@@ -3,8 +3,8 @@ import {
     createUser,
     getUsers,
     getUserById,
-    updateUser,
-    deleteUser,
+    updateUserById,
+    deleteUserById,
     loginUser
 } from '../Controller/userController.js';
 
@@ -22,7 +22,7 @@ router.route('/login').post(loginUser)
     router
     .route('/:id')
     .get(getUserById) 
-    .put(updateUser)  
-    .delete(deleteUser);  
+    .put(updateUserById)  
+    .delete(deleteUserById);  
 
 export default router;

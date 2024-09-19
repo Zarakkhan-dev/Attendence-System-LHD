@@ -37,17 +37,17 @@ const employeeSchema = Joi.object({
         'number.integer': 'Total off days must be an integer.',
         'number.min': 'Total off days cannot be negative.'
     }),
-    totalSalary: Joi.number().positive().optional().messages({
+    totalSalary: Joi.number().min(0).optional().messages({
         'number.base': 'Total salary must be a number.',
-        'number.positive': 'Total salary must be a positive number.'
+        'number.min': 'Total salary must be a positive number or zero.'
     }),
     netSalary: Joi.number().positive().optional().messages({
         'number.base': 'Net salary must be a number.',
         'number.positive': 'Net salary must be a positive number.'
     }),
-    deductedSalary: Joi.number().positive().optional().messages({
+    deductedSalary: Joi.number().min(0).optional().messages({
         'number.base': 'Deducted salary must be a number.',
-        'number.positive': 'Deducted salary must be a positive number.'
+         'number.min': 'Deducted salary must be a positive number or zero.'
     }),
     month: Joi.string().required().messages({
         'string.base': 'Month must be a string.',

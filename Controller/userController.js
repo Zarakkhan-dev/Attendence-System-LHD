@@ -1,4 +1,4 @@
-import User from '../models/userModel.js';
+import User from '../models/UserModel.js';
 import appAsync from "../utils/catchAsync.js"
 import appError from '../utils/appError.js';
 import { generateAccessToken, generateRefreshToken, handleTokenGeneration } from '../middleware/tokenMiddleware.js';
@@ -53,7 +53,7 @@ export const getUserById = appAsync(async (req, res, next) => {
 });
 
 // Update user by ID
-export const updateUser = appAsync(async (req, res, next) => {
+export const updateUserById = appAsync(async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
@@ -70,7 +70,7 @@ export const updateUser = appAsync(async (req, res, next) => {
 });
 
 // Delete user by ID
-export const deleteUser = appAsync(async (req, res, next) => {
+export const deleteUserById = appAsync(async (req, res, next) => {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
 
     if (!deletedUser) {

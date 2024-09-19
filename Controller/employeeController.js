@@ -1,8 +1,11 @@
  import Employee from "../models/EmployeeDetailModel.js"
 import appAsync from "../utils/catchAsync.js";
 import appError from "../utils/appError.js";
-
+import User from "../models/UserModel.js";
 export const createEmployee = appAsync(async (req, res, next) => {
+    const {userId} = req.body ;
+    const user  = await User.findOne({"_id": userId}) ;
+    if(!user)  return next(new appError('User Not Found', 404));
     const newEmployee = await Employee.create(req.body);
     res.status(201).json({
         status: 'success',
