@@ -6,21 +6,26 @@ import bcrypt from "bcryptjs"
 
 // Create a new user
 export const createUser = appAsync(async (req, res, next) => {
-    const { password, employeeID } = req.body;
+    const { password, employeeId } = req.body;
 
-    // Check if the employeeID or email already exists
-    const existingUser = await User.findOne({ employeeID });
+    // Check if employeeId and password are provided
+    if (!employeeId || !password) {
+        return next(new appError('Employee ID and password are required', 400));
+    }
+
+    // Check if the employee ID already exists
+    const existingUser = await User.findOne({ employeeId });
     if (existingUser) {
         return next(new appError('Employee with this ID already exists', 400));
     }
 
-    // Hash the password before saving the user
-    const hashedPassword = await bcrypt.hash(password, 12); // 12 is the salt rounds
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create the new user with the hashed password
+    // Create the user
     let newUser = await User.create({ ...req.body, password: hashedPassword });
 
-    // Generate tokens and save them to the new user
+    // Handle token generation and response
     await handleTokenGeneration(newUser, res);
 });
 
@@ -81,7 +86,7 @@ export const deleteUser = appAsync(async (req, res, next) => {
 
 export const loginUser = appAsync(async (req, res, next) => {
     const { email, password } = req.body;
-w
+
     const user = await User.findOne({ email }).select('+password'); 
 
     if (!user || !(await bcrypt.compare(password, user.password))) {

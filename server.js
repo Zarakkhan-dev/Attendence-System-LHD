@@ -18,13 +18,9 @@ app.use(cors());
 db();
 
 //Define routes
-
 app.use("/api/user",userRoutes);
 app.use("/api/employee-detail" ,employeeRoutes);
-app.use("/api/atendence" ,attendenceRoutes)
-
-
-
+app.use("/api/attendence" ,attendenceRoutes)
 
 
 const PORT = process.env.PORT || 4001;

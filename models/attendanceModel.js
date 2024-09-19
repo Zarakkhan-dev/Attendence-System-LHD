@@ -1,37 +1,45 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-const attendanceSchema = new mongoose.Schema({
-    employeeID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Employee', // Reference to the Employee model
-        required: true,
+const attendanceSchema = new Schema({
+    employeeId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     checkInTime: {
         type: Date,
-        required: true,
+        required: true
     },
     checkOutTime: {
-        type: Date,
-    },
-    data : {
-        type : Date ,
-
+        type: Date
     },
     lateReason: {
         type: String,
-        trim: true,
+        trim: true
     },
     status: {
         type: String,
-        enum: ['Accepted', 'Rejected'],
-        default: 'Accepted',
+        enum: ['Accept', 'Rejected'],
+        default: 'Accept',
+        required: true
+    },
+    day :{
+        type:Number
+    },
+    month : {
+        type:String 
+    },
+    year :{
+        type :String
     },
     timestamp: {
         type: Date,
-        default: Date.now,
+        default: Date.now, // Automatically generate the timestamp
+        required: true
     }
-}, { timestamps: true });
+});
 
 
-const Attendence =mongoose.models.Attendance  || mongoose.model('Attendance', attendanceSchema);
-export default Attendence
+const attendence = mongoose.models.Attendance || mongoose.model('Attendance', attendanceSchema);
+export default  attendence 
