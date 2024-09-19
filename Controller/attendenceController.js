@@ -167,11 +167,13 @@ export const getAllAttendance = catchAsync(async (req, res, next) => {
 
 // Get attendance record by ID
 export const getAttendanceById = catchAsync(async (req, res, next) => {
-  const attendanceRecord = await Attendance.findById(req.params.id).populate(
+
+    console.log(req.params.id);
+  const attendanceRecord = await Attendance.findOne({"employeeId" :req.params.id}).populate(
     "employeeId",
     "username email"
   );
-
+console.log(attendanceRecord)
   if (!attendanceRecord) {
     return next(new appError("Check-in First then check-out ", 404));
   }
