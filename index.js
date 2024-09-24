@@ -19,6 +19,7 @@ db();
 app.get("/",(req,res)=>{
     res.send("Hello World !")
 })
+
 //Define routes
 app.use("/api/user",userRoutes);
 app.use("/api/employee-detail" ,employeeRoutes);

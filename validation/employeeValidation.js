@@ -1,11 +1,10 @@
 import Joi from 'joi';
 
 const employeeSchema = Joi.object({
-    userId: Joi.string().hex().length(24).required().messages({
+    userId: Joi.string().hex().length(24).messages({
         'string.base': 'User ID must be a string.',
         'string.hex': 'User ID must be a valid hex string.',
         'string.length': 'User ID must be exactly 24 characters long.',
-        'any.required': 'User ID is required.'
     }),
     salaryPerDay: Joi.number().positive().required().messages({
         'number.base': 'Salary per day must be a number.',
